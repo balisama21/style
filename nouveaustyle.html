@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles avec Chargement HTML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .horizontal-scroll {
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .scroll-container {
+            display: flex;
+            gap: 2rem;
+            min-width: max-content;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 350px;
+            flex-shrink: 0;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .read-more {
+            color: #4fc3f7;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+            color: #29b6f6;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-body {
+            padding: 0;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-body iframe {
+            width: 100%;
+            height: 80vh;
+            border: none;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .loading i {
+            margin-right: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        .error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #e53e3e;
+            font-size: 1.2rem;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .scroll-container {
+                gap: 1rem;
+            }
+            
+            .card {
+                width: 280px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10px;
+            }
+            
+            .modal-body iframe {
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section id="articles" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Articles Récents</h2>
+                <p>Les dernières analyses, tutoriels et réflexions sur le monde du digital.</p>
+            </div>
+            <div class="horizontal-scroll">
+                <div class="scroll-container">
+                    <div class="card article-card" onclick="openModal('marketing.html')">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop');"></div>
+                        <div class="card-content">
+                            <p class="meta">Marketing Digital • 28 Mai 2025</p>
+                            <h3>Pourquoi chaque entreprise a besoin du marketing digital en 2025</h3>
+                            <a onclick="openModal('marketing.html')" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="card article-card" onclick="openModal('dev_perso.html')">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1526379095098-d400fd0bf935?q=80&w=2032&auto=format&fit=crop');"></div>
+                        <div class="card-content">
+                            <p class="meta">Développement • 15 Mai 2025</p>
+                            <h3>Maîtriser Python en autodidacte : Mon parcours et stratégies</h3>
+                            <a href="dev_perso.html" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="card article-card" onclick="openModal('digital.html')">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=2039&auto=format&fit=crop');"></div>
+                        <div class="card-content">
+                            <p class="meta">Productivité • 5 Juin 2025</p>
+                            <h3>5 habitudes qui ont transformé ma productivité</h3>
+                            <a href="digital.html" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="card article-card" onclick="openModal('IA.html')">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop');"></div>
+                        <div class="card-content">
+                            <p class="meta">Business • 20 Juin 2025</p>
+                            <h3>Comment créer une stratégie de contenu qui engage</h3>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="articleModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body" id="modalBody">
+                <!-- Le contenu HTML sera chargé ici -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+       function openModal(htmlFile) {
+    const modal = document.getElementById('articleModal');
+    const modalBody = document.getElementById('modalBody');
+    
+    // Afficher le modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Afficher le chargement
+    modalBody.innerHTML = `
+        <div class="loading">
+            <i class="fas fa-spinner"></i>
+            Chargement de l'article...
+        </div>
+    `;
+    
+    // Vérifier si on est sur un serveur local ou distant
+    const isLocal = window.location.protocol === 'file:';
+    
+    if (isLocal) {
+        modalBody.innerHTML = `
+            <div class="error">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Erreur de sécurité CORS</p>
+                <p style="font-size: 0.9rem; opacity: 0.7; text-align: center; padding: 0 20px;">
+                    Pour des raisons de sécurité, les navigateurs bloquent le chargement de fichiers locaux.<br>
+                    Veuillez utiliser un serveur local (ex: Live Server, Python http.server, etc.)
+                </p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Charger le contenu HTML
+    fetch(htmlFile)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Fichier non trouvé: ${htmlFile}`);
+            }
+            return response.text();
+        })
+        .then(html => {
+            // Créer un iframe pour afficher le contenu HTML
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '80vh';
+            iframe.style.border = 'none';
+            iframe.srcdoc = html;
+            
+            modalBody.innerHTML = '';
+            modalBody.appendChild(iframe);
+        })
+        .catch(error => {
+            console.error('Erreur lors du chargement:', error);
+            modalBody.innerHTML = `
+                <div class="error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Erreur lors du chargement</p>
+                    <p style="font-size: 0.9rem; opacity: 0.7;">
+                        Vérifiez que le fichier "${htmlFile}" existe dans le même dossier
+                    </p>
+                </div>
+            `;
+        });
+  }
+    </script>
+</body>
+</html>
