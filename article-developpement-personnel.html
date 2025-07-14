@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q47HY7CVGP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Q47HY7CVGP');
+  </script>
+  
+  <!-- SEO Meta Tags -->
+  <title>Développement personnel : Reprendre le contrôle de sa vie - Maminirina Balsama</title>
+  <meta name="description" content="Comprendre le développement personnel, ses piliers, ses bienfaits et des conseils pratiques pour améliorer votre vie jour après jour.">
+  <meta name="keywords" content="développement personnel, discipline, objectifs, confiance, bien-être, Maminirina Balsama">
+  <meta name="author" content="Maminirina Balsama">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:title" content="Développement personnel : Reprendre le contrôle de sa vie - Maminirina Balsama">
+  <meta property="og:description" content="Comprendre le développement personnel et transformer sa vie un pas à la fois">
+  <meta property="og:image" content="https://raw.githubusercontent.com/balisama21/balisama-site/main/dev-perso.PNG">
+  <meta property="og:url" content="https://balsama.netlify.app/article-developpement-personnel.html">
+  <meta property="og:type" content="article">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.8;
+      color: #333;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      word-spacing: 0.15em;
+      letter-spacing: 0.03em;
+    }
+
+    /* Améliorations pour la lisibilité */
+    .reading-mode {
+      background: #f8f9fa;
+      transition: all 0.3s ease;
+    }
+
+    /* Navigation */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #667eea;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 50%;
+      background: #667eea;
+      transition: all 0.3s ease;
+    }
+
+    .nav-menu a:hover::after, .nav-menu a.active::after {
+      width: 100%;
+      left: 0;
+    }
+
+    .nav-menu a:hover, .nav-menu a.active {
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    /* Boutons d'accessibilité */
+    .accessibility-controls {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .accessibility-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .accessibility-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .mobile-menu span {
+      width: 25px;
+      height: 3px;
+      background: #333;
+      margin: 3px 0;
+      transition: 0.3s;
+    }
+
+    /* Article Header */
+    .article-header {
+      background: linear-gradient(rgba(102, 0, 0, 0.4), rgba(126, 0, 0, 0.4)),
+                  url('https://raw.githubusercontent.com/balisama21/balisama-site/main/dev.jpg') center/cover no-repeat;
+      padding: 120px 20px 80px;
+      text-align: center;
+      color: white;
+      position: relative;
+      min-height: 65vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .article-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(255, 127, 80, 0.1));
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.1; }
+    }
+
+    .article-header-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .article-header h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      margin-bottom: 25px;
+      font-weight: 700;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+      word-spacing: 0.15em;
+      letter-spacing: 0.03em;
+      line-height: 1.3;
+    }
+
+    .article-meta {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      opacity: 0.95;
+      margin-bottom: 25px;
+      word-spacing: 0.15em;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 8px 16px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .article-intro {
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      opacity: 0.95;
+      max-width: 700px;
+      margin: 0 auto;
+      word-spacing: 0.15em;
+      letter-spacing: 0.03em;
+      line-height: 1.7;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      z-index: 999;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea, #ff7f50);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Article Content */
+    .article-content {
+      background: white;
+      padding: 80px 20px;
+      position: relative;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    /* Table des matières */
+    .table-of-contents {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(255, 127, 80, 0.05));
+      border-radius: 15px;
+      padding: 30px;
+      margin: 40px 0;
+      border-left: 5px solid #667eea;
+    }
+
+    .table-of-contents h3 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .toc-list li {
+      margin: 10px 0;
+    }
+
+    .toc-list a {
+      color: #555;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .toc-list a:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+      transform: translateX(10px);
+    }
+
+    .article-content h2 {
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      color: #333;
+      margin: 50px 0 25px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid #ff7f50;
+      word-spacing: 0.15em;
+      letter-spacing: 0.03em;
+      line-height: 1.4;
+      scroll-margin-top: 100px;
+      position: relative;
+    }
+
+    .article-content h2::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 40px;
+      background: linear-gradient(45deg, #667eea, #ff7f50);
+      border-radius: 4px;
+    }
+
+    .article-content h3 {
+      font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+      color: #ff7f50;
+      margin: 35px 0 20px;
+      word-spacing: 0.15em;
+      line-height: 1.4;
+      scroll-margin-top: 100px;
+    }
+
+    .article-content p {
+      font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+      color: #555;
+      margin-bottom: 28px;
+      text-align: justify;
+      word-spacing: 0.18em;
+      letter-spacing: 0.035em;
+      line-height: 2.0;
+    }
+
+    .article-content ul, .article-content ol {
+      margin: 30px 0 30px 35px;
+    }
+
+    .article-content li {
+      font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+      color: #555;
+      margin-bottom: 22px;
+      word-spacing: 0.18em;
+      letter-spacing: 0.035em;
+      line-height: 2.0;
+      position: relative;
+    }
+
+    .article-content ul li::before {
+      content: '→';
+      color: #ff7f50;
+      font-weight: bold;
+      position: absolute;
+      left: -25px;
+    }
+
+    .quote-box {
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      border-radius: 20px;
+      padding: 40px;
+      margin: 45px 0;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(255, 127, 80, 0.2);
+      overflow: hidden;
+    }
+
+    .quote-box::before {
+      content: '"';
+      font-size: clamp(4rem, 8vw, 5rem);
+      color: rgba(255, 127, 80, 0.3);
+      position: absolute;
+      top: -20px;
+      left: 30px;
+      font-family: serif;
+      z-index: 1;
+    }
+
+    .quote-box::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .quote-box p {
+      font-style: italic;
+      font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+      color: #333;
+      margin-bottom: 20px;
+      word-spacing: 0.15em;
+      letter-spacing: 0.03em;
+      line-height: 1.8;
+      position: relative;
+      z-index: 2;
+    }
+
+    .quote-author {
+      font-weight: bold;
+      color: #ff7f50;
+      font-size: clamp(1rem, 2.8vw, 1.1rem);
+      word-spacing: 0.12em;
+      position: relative;
+      z-index: 2;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(255, 127, 80, 0.1), rgba(255, 140, 0, 0.1));
+      border-left: 5px solid #ff7f50;
+      padding: 25px;
+      margin: 35px 0;
+      border-radius: 15px;
+      font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+      word-spacing: 0.18em;
+      letter-spacing: 0.035em;
+      line-height: 1.9;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-box::before {
+      content: '💡';
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      opacity: 0.7;
+    }
+
+    .code-block {
+      background: linear-gradient(135deg, #2d3748, #1a202c);
+      color: #e2e8f0;
+      padding: 30px;
+      border-radius: 15px;
+      margin: 35px 0;
+      font-family: 'Courier New', monospace;
+      font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+      line-height: 1.7;
+      white-space: pre-line;
+      word-spacing: 0.1em;
+      letter-spacing: 0.025em;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .code-block::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: linear-gradient(90deg, #ff7f50, #667eea, #ff7f50);
+      animation: slide 3s linear infinite;
+    }
+
+    @keyframes slide {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .cta-section {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 50px;
+      border-radius: 20px;
+      text-align: center;
+      margin: 50px 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: rotate 10s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .cta-section h3 {
+      font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+      margin-bottom: 20px;
+      word-spacing: 0.15em;
+      letter-spacing: 0.03em;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-section p {
+      font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+      margin-bottom: 30px;
+      word-spacing: 0.15em;
+      letter-spacing: 0.03em;
+      line-height: 1.8;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(45deg, #ff7f50, #ff6347);
+      color: white;
+      padding: 18px 35px;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      font-size: clamp(1rem, 2.5vw, 1.1rem);
+      word-spacing: 0.12em;
+      letter-spacing: 0.025em;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 8px 20px rgba(255, 127, 80, 0.3);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(255, 127, 80, 0.4);
+    }
+
+    /* Statistiques de lecture */
+    .reading-stats {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(255, 127, 80, 0.1));
+      border-radius: 15px;
+      padding: 25px;
+      margin: 40px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ff7f50;
+      display: block;
+    }
+
+    .stat-label {
+      color: #666;
+      margin-top: 5px;
+      font-size: 0.9rem;
+    }
+
+    /* Bouton de partage */
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 40px 0;
+    }
+
+    .share-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .share-btn.facebook { background: #3b5998; }
+    .share-btn.twitter { background: #1da1f2; }
+    .share-btn.linkedin { background: #0077b5; }
+    .share-btn.whatsapp { background: #25d366; }
+
+    .share-btn:hover {
+      transform: translateY(-3px) scale(1.1);
+    }
+
+    /* Navigation between articles */
+    .article-navigation {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      padding: 50px 20px;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .nav-links {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .nav-link {
+      flex: 1;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      text-decoration: none;
+      color: #333;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav-link:hover::before {
+      left: 100%;
+    }
+
+    .nav-link:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+
+    .nav-link h4 {
+      color: #ff7f50;
+      margin-bottom: 15px;
+      font-size: clamp(1.1rem, 2.8vw, 1.3rem);
+      word-spacing: 0.15em;
+      letter-spacing: 0.025em;
+    }
+
+    .nav-link p {
+      font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+      word-spacing: 0.15em;
+      letter-spacing: 0.03em;
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: white;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-content p {
+      font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+      word-spacing: 0.15em;
+      letter-spacing: 0.03em;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .accessibility-controls {
+        top: 75px;
+        right: 10px;
+      }
+
+      .accessibility-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+      }
+
+      .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: rgba(255, 255, 255, 0.98);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(15px);
+        padding: 25px 0;
+        z-index: 999;
+      }
+
+      .nav-menu.active {
+        left: 0;
+      }
+
+      .nav-menu li {
+        margin: 15px 0;
+      }
+
+      .mobile-menu {
+        display: flex;
+      }
+
+      .article-header {
+        padding: 100px 15px 60px;
+        min-height: 55vh;
+      }
+
+      .article-meta {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .article-content {
+        padding: 50px 15px;
+      }
+
+      .table-of-contents {
+        padding: 25px;
+        margin: 30px 0;
+      }
+
+      .nav-links {
+        flex-direction: column;
+      }
+
+      .quote-box {
+        padding: 30px 20px;
+        margin: 35px 0;
+      }
+
+      .quote-box::before {
+        left: 15px;
+        top: -15px;
+      }
+
+      .highlight-box {
+        padding: 20px;
+        margin: 30px 0;
+      }
+
+      .code-block {
+        padding: 25px 20px;
+        margin: 30px 0;
+      }
+
+      .cta-section {
+        padding: 35px 20px;
+        margin: 35px 0;
+      }
+
+      .reading-stats {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+
+      .share-buttons {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .share-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+      }
+
+      body {
+        word-spacing: 0.2em;
+        letter-spacing: 0.04em;
+      }
+
+      .article-content p {
+        word-spacing: 0.22em;
+        letter-spacing: 0.04em;
+        line-height: 2.1;
+        margin-bottom: 32px;
+        text-align: left;
+      }
+
+      .article-content li {
+        word-spacing: 0.22em;
+        letter-spacing: 0.04em;
+        line-height: 2.1;
+        margin-bottom: 25px;
+      }
+
+      .article-header h1 {
+        word-spacing: 0.2em;
+        letter-spacing: 0.04em;
+        line-height: 1.4;
+      }
+
+      .article-intro {
+        word-spacing: 0.2em;
+        letter-spacing: 0.04em;
+        line-height: 1.8;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-container {
+        padding: 0 15px;
+      }
+
+      .article-header {
+        padding: 90px 10px 50px;
+      }
+
+      .article-content {
+        padding: 40px 10px;
+      }
+
+      .quote-box {
+        padding: 25px 15px;
+      }
+
+      .highlight-box {
+        padding: 18px;
+      }
+
+      .code-block {
+        padding: 20px 15px;
+      }
+
+      .cta-section {
+        padding: 30px 15px;
+      }
+
+      .table-of-contents {
+        padding: 20px;
+      }
+
+      body {
+        word-spacing: 0.25em;
+        letter-spacing: 0.05em;
+      }
+
+      .article-content p {
+        word-spacing: 0.25em;
+        letter-spacing: 0.05em;
+        line-height: 2.2;
+        margin-bottom: 35px;
+        text-align: left;
+      }
+
+      .article-content li {
+        word-spacing: 0.25em;
+        letter-spacing: 0.05em;
+        line-height: 2.2;
+        margin-bottom: 28px;
+      }
+
+      .article-header h1 {
+        word-spacing: 0.25em;
+        letter-spacing: 0.05em;
+        line-height: 1.5;
+      }
+
+      .article-intro {
+        word-spacing: 0.25em;
+        letter-spacing: 0.05em;
+        line-height: 1.9;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">Maminirina Balsama</a>
+      <ul class="nav-menu">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="about.html">À propos</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contrôles d'accessibilité -->
+  <div class="accessibility-controls">
+    <button class="accessibility-btn" id="fontSizeBtn" title="Agrandir le texte">🔍</button>
+    <button class="accessibility-btn" id="readingModeBtn" title="Mode lecture">📖</button>
+    <button class="accessibility-btn" id="darkModeBtn" title="Mode sombre">🌙</button>
+  </div>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <div class="article-header-content">
+      <h1>🌱 Développement personnel : Reprendre le contrôle de sa vie, un pas à la fois</h1>
+      <div class="article-meta">
+        <span class="meta-item">📅 Publié le 5 juin 2025</span>
+        <span class="meta-item">⏱️ 8 min de lecture</span>
+        <span class="meta-item">🏷️ Développement personnel</span>
+      </div>
+      <p class="article-intro">Comprendre le développement personnel, ses piliers, ses bienfaits et des conseils pratiques pour améliorer votre vie jour après jour.</p>
+    </div>
+  </header>
+
+  <!-- Article Content -->
+  <main class="article-content">
+    <div class="container">
+      <!-- Statistiques de lecture -->
+      <div class="reading-stats">
+        <div class="stat-item">
+          <span class="stat-number">8</span>
+          <span class="stat-label">Minutes de lecture</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">2,350</span>
+          <span class="stat-label">Mots</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">15</span>
+          <span class="stat-label">Conseils pratiques</span>
+        </div>
+      </div>
+
+      <!-- Table des matières -->
+      <div class="table-of-contents">
+        <h3>📋 Table des matières</h3>
+        <ul class="toc-list">
+          <li><a href="#quest-ce-que">Qu'est-ce que le développement personnel ?</a></li>
+          <li><a href="#pourquoi-important">Pourquoi c'est important ?</a></li>
+          <li><a href="#piliers">Les piliers du développement personnel</a></li>
+          <li><a href="#conseils-pratiques">Conseils pratiques pour débuter</a></li>
+          <li><a href="#livres-recommandes">Livres recommandés</a></li>
+          <li><a href="#conclusion">Conclusion</a></li>
+        </ul>
+      </div>
+
+      <p>Le développement personnel est bien plus qu'une mode ou un concept abstrait. C'est un cheminement conscient vers une meilleure version de soi-même, un voyage qui commence par une prise de conscience : celle que l'on peut évoluer, grandir et changer sa vie par ses propres efforts.</p>
+
+      <div class="quote-box">
+        <p>Nous sommes ce que nous faisons de manière répétée. L'excellence n'est donc pas un acte, mais une habitude.</p>
+        <div class="quote-author">- Aristote</div>
+      </div>
+
+      <h2 id="quest-ce-que">Qu'est-ce que le développement personnel ?</h2>
+      <p>Le développement personnel englobe toutes les actions visant à améliorer sa qualité de vie, sa confiance, ses compétences, et son bien-être émotionnel. Il touche plusieurs domaines : les émotions, la communication, la discipline, les habitudes, les objectifs, ou encore la gestion du temps.</p>
+
+      <div class="highlight-box">
+        <strong>🌟 Objectif :</strong> Devenir une version plus épanouie, confiante et accomplie de soi-même.
+      </div>
+
+      <h2 id="pourquoi-important">Pourquoi c'est important ?</h2>
+      <ul>
+        <li><strong>Mieux se connaître :</strong> Identifier ses forces, ses faiblesses et ses valeurs.</li>
+        <li><strong>Renforcer sa confiance :</strong> Oser prendre des décisions et sortir de sa zone de confort.</li>
+        <li><strong>Gérer ses émotions :</strong> Développer l'intelligence émotionnelle pour mieux réagir face aux difficultés.</li>
+        <li><strong>Améliorer ses relations :</strong> Savoir écouter, communiquer et comprendre les autres.</li>
+        <li><strong>Atteindre ses objectifs :</strong> Avoir une vision claire et les moyens de la réaliser.</li>
+      </ul>
+
+      <h2 id="piliers">Les piliers du développement personnel</h2>
+      
+      <h3>1. La discipline 💪</h3>
+      <p>Sans régularité, aucune progression durable n'est possible. La discipline, c'est se montrer fidèle à ses objectifs, même quand la motivation s'efface. C'est le pont entre vos rêves et leur réalisation.</p>
+
+      <h3>2. La clarté des objectifs 🎯</h3>
+      <p>Un objectif clair est comme une boussole. Il guide vos décisions et vous motive chaque jour à avancer, même par petits pas. Sans destination précise, vous risquez de tourner en rond.</p>
+
+      <h3>3. La prise de responsabilité 🎭</h3>
+      <p>Cesser de se victimiser et reprendre le contrôle. Vous n'êtes peut-être pas responsable de tout ce qui vous arrive, mais vous êtes responsable de votre réaction face à tout. C'est là que réside votre pouvoir.</p>
+
+      <h3>4. La mentalité de croissance 📈</h3>
+      <p>Croire que vous pouvez évoluer, apprendre et vous améliorer. Voir les échecs comme des opportunités d'apprentissage plutôt que comme des verdicts définitifs sur vos capacités.</p>
+
+      <h2 id="conseils-pratiques">Mes conseils pratiques pour débuter</h2>
+      
+      <div class="highlight-box">
+        <strong>🚀 Conseil d'expert :</strong> Commencez par une seule habitude et maîtrisez-la avant d'en ajouter une autre. La constance bat l'intensité à chaque fois.
+      </div>
+
+      <ul>
+        <li><strong>Commence petit :</strong> Changer une seule habitude à la fois (par exemple : se lever 30 min plus tôt).</li>
+        <li><strong>Écris un journal quotidien :</strong> Pour clarifier tes pensées et suivre ton évolution.</li>
+        <li><strong>Lis chaque jour :</strong> Même 10 pages par jour d'un bon livre peuvent changer ta façon de voir la vie.</li>
+        <li><strong>Médite ou respire consciemment :</strong> 5 minutes par jour peuvent suffire à réduire le stress.</li>
+        <li><strong>Fixe-toi des objectifs SMART :</strong> Spécifiques, Mesurables, Atteignables, Réalistes et Temporels.</li>
+        <li><strong>Entoure-toi de personnes positives :</strong> Votre cercle social influence énormément votre développement.</li>
+      </ul>
+
+      <div class="code-block"># Exemple : Ma routine du matin
+- Réveil à 6h30 (sans snooze!)
+- 5 min de respiration consciente
+- 10 min de lecture inspirante
+- 20 min d'écriture dans mon journal
+- 1 objectif prioritaire pour la journée
+- Petit-déjeuner sain et hydratation</div>
+
+      <h2 id="livres-recommandes">📚 Livres recommandés pour commencer</h2>
+      
+      <div class="highlight-box">
+        <strong>💡 Astuce :</strong> Lisez un livre à la fois et appliquez au moins une idée avant de passer au suivant.
+      </div>
+
+      <ul>
+        <li><strong>"Les 7 habitudes de ceux qui réalisent tout ce qu'ils entreprennent"</strong> – Stephen R. Covey</li>
+        <li><strong>"Pouvoir illimité"</strong> – Tony Robbins</li>
+        <li><strong>"L'effet cumulé"</strong> – Darren Hardy</li>
+        <li><strong>"Miracle Morning"</strong> – Hal Elrod</li>
+        <li><strong>"Atomic Habits"</strong> – James Clear</li>
+        <li><strong>"Mindset"</strong> – Carol Dweck</li>
+      </ul>
+
+      <h2>🛠️ Outils et techniques à essayer</h2>
+      <ul>
+        <li><strong>La technique Pomodoro :</strong> 25 minutes de travail concentré, 5 minutes de pause.</li>
+        <li><strong>La règle des 2 minutes :</strong> Si une tâche prend moins de 2 minutes, faites-la immédiatement.</li>
+        <li><strong>La visualisation :</strong> Imaginez-vous avoir déjà atteint vos objectifs.</li>
+        <li><strong>Le suivi d'habitudes :</strong> Utilisez un tableau ou une app pour tracker vos progrès.</li>
+      </ul>
+
+      <div class="quote-box">
+        <p>Le succès, c'est la somme de petits efforts répétés jour après jour.</p>
+        <div class="quote-author">- Robert Collier</div>
+      </div>
+
+      <h2 id="conclusion">Conclusion : ta vie est entre tes mains</h2>
+      <p>Personne ne viendra te sauver. Mais tu as déjà en toi toutes les ressources nécessaires pour créer une vie plus alignée avec tes valeurs et tes rêves. Le développement personnel ne se fait pas en un jour, mais chaque jour compte. Commence aujourd'hui, même par une toute petite action. Tu n'imagines pas à quel point elle peut transformer ton futur.</p>
+
+      <p>Rappelez-vous : le développement personnel n'est pas une destination, c'est un voyage. Chaque pas compte, chaque effort vous rapproche de la personne que vous voulez devenir. Soyez patient avec vous-même, célébrez vos petites victoires et continuez d'avancer, un jour à la fois.</p>
+
+      <!-- Boutons de partage -->
+      <div class="share-buttons">
+        <button class="share-btn facebook" onclick="shareArticle('facebook')" title="Partager sur Facebook">📘</button>
+        <button class="share-btn twitter" onclick="shareArticle('twitter')" title="Partager sur Twitter">🐦</button>
+        <button class="share-btn linkedin" onclick="shareArticle('linkedin')" title="Partager sur LinkedIn">💼</button>
+        <button class="share-btn whatsapp" onclick="shareArticle('whatsapp')" title="Partager sur WhatsApp">💬</button>
+      </div>
+
+      <div class="cta-section">
+        <h3>Prêt(e) à passer à l'action ?</h3>
+        <p>Inscris ton premier objectif de développement personnel dès maintenant. Le futur appartient à ceux qui prennent les rênes de leur vie. Commençons ensemble ce voyage vers une meilleure version de toi-même.</p>
+        <a href="contact.html" class="cta-button">Me contacter pour un accompagnement</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Article Navigation -->
+  <section class="article-navigation">
+    <div class="nav-links">
+      <a href="article-seo.html" class="nav-link">
+        <h4>← Article précédent</h4>
+        <p>Optimiser votre présence en ligne avec le SEO</p>
+      </a>
+      <a href="blog.html" class="nav-link">
+        <h4>Retour au blog →</h4>
+        <p>Découvrir tous mes articles</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Maminirina Balsama. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Variables globales
+    let fontSize = 1;
+    let darkMode = false;
+    let readingMode = false;
+
+    // Barre de progression de lecture
+    function updateProgressBar() {
+      const article = document.querySelector('.article-content');
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+    }
+
+    window.addEventListener('scroll', updateProgressBar);
+
+    // Contrôles d'accessibilité
+    document.getElementById('fontSizeBtn').addEventListener('click', function() {
+      fontSize = fontSize >= 1.3 ? 1 : fontSize + 0.1;
+      document.body.style.fontSize = fontSize + 'em';
+      this.style.background = fontSize > 1 ? 'rgba(102, 126, 234, 0.2)' : 'rgba(255, 255, 255, 0.9)';
+    });
+
+    document.getElementById('readingModeBtn').addEventListener('click', function() {
+      readingMode = !readingMode;
+      document.body.classList.toggle('reading-mode', readingMode);
+      this.style.background = readingMode ? 'rgba(102, 126, 234, 0.2)' : 'rgba(255, 255, 255, 0.9)';
+    });
+
+    document.getElementById('darkModeBtn').addEventListener('click', function() {
+      darkMode = !darkMode;
+      document.body.style.filter = darkMode ? 'invert(1) hue-rotate(180deg)' : 'none';
+      this.style.background = darkMode ? 'rgba(102, 126, 234, 0.2)' : 'rgba(255, 255, 255, 0.9)';
+      this.textContent = darkMode ? '☀️' : '🌙';
+    });
+
+    // Fonction de partage
+    function shareArticle(platform) {
+      const url = encodeURIComponent(window.location.href);
+      const title = encodeURIComponent(document.title);
+      const text = encodeURIComponent('Découvrez cet article sur le développement personnel');
+      
+      let shareUrl = '';
+      
+      switch(platform) {
+        case 'facebook':
+          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+          break;
+        case 'twitter':
+          shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+          break;
+        case 'linkedin':
+          shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+          break;
+        case 'whatsapp':
+          shareUrl = `https://wa.me/?text=${text}%20${url}`;
+          break;
+      }
+      
+      if (shareUrl) {
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+      }
+    }
+
+    // Mobile menu toggle
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+
+    mobileMenu.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      
+      const spans = mobileMenu.querySelectorAll('span');
+      if (navMenu.classList.contains('active')) {
+        spans[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
+      } else {
+        spans[0].style.transform = 'rotate(0) translate(0, 0)';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'rotate(0) translate(0, 0)';
+      }
+    });
+
+    // Fermer le menu mobile en cliquant sur un lien
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        const spans = mobileMenu.querySelectorAll('span');
+        spans[0].style.transform = 'rotate(0) translate(0, 0)';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'rotate(0) translate(0, 0)';
+      });
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        navbar.style.boxShadow = '0 4px 30px rgba(0,0,0,0.12)';
+      } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        navbar.style.boxShadow = '0 4px 25px rgba(0,0,0,0.08)';
+      }
+    });
+
+    // Smooth scroll pour les liens internes
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Animation des éléments au scroll
+    function animateOnScroll() {
+      const elements = document.querySelectorAll('.quote-box, .highlight-box, .cta-section, .reading-stats');
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    }
+
+    // Initialiser les éléments pour l'animation
+    document.querySelectorAll('.quote-box, .highlight-box, .cta-section, .reading-stats').forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(30px)';
+      element.style.transition = 'all 0.6s ease';
+    });
+
+    window.addEventListener('scroll', animateOnScroll);
+    animateOnScroll(); // Déclencher au chargement de la page
+  </script>
+</body>
+</html>
