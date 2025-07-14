@@ -257,7 +257,7 @@
                         <div class="card-content">
                             <p class="meta">Marketing Digital • 28 Mai 2025</p>
                             <h3>Pourquoi chaque entreprise a besoin du marketing digital en 2025</h3>
-                            <a onclick="openModal('marketing.html')" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="card article-card" onclick="openModal('dev_perso.html')">
@@ -265,7 +265,7 @@
                         <div class="card-content">
                             <p class="meta">Développement • 15 Mai 2025</p>
                             <h3>Maîtriser Python en autodidacte : Mon parcours et stratégies</h3>
-                            <a href="dev_perso.html" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="card article-card" onclick="openModal('digital.html')">
@@ -273,7 +273,7 @@
                         <div class="card-content">
                             <p class="meta">Productivité • 5 Juin 2025</p>
                             <h3>5 habitudes qui ont transformé ma productivité</h3>
-                            <a href="digital.html" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="card article-card" onclick="openModal('IA.html')">
@@ -302,71 +302,84 @@
     </div>
 
     <script>
-       function openModal(htmlFile) {
-    const modal = document.getElementById('articleModal');
-    const modalBody = document.getElementById('modalBody');
-    
-    // Afficher le modal
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    
-    // Afficher le chargement
-    modalBody.innerHTML = `
-        <div class="loading">
-            <i class="fas fa-spinner"></i>
-            Chargement de l'article...
-        </div>
-    `;
-    
-    // Vérifier si on est sur un serveur local ou distant
-    const isLocal = window.location.protocol === 'file:';
-    
-    if (isLocal) {
-        modalBody.innerHTML = `
-            <div class="error">
-                <i class="fas fa-exclamation-triangle"></i>
-                <p>Erreur de sécurité CORS</p>
-                <p style="font-size: 0.9rem; opacity: 0.7; text-align: center; padding: 0 20px;">
-                    Pour des raisons de sécurité, les navigateurs bloquent le chargement de fichiers locaux.<br>
-                    Veuillez utiliser un serveur local (ex: Live Server, Python http.server, etc.)
-                </p>
-            </div>
-        `;
-        return;
-    }
-    
-    // Charger le contenu HTML
-    fetch(htmlFile)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Fichier non trouvé: ${htmlFile}`);
-            }
-            return response.text();
-        })
-        .then(html => {
-            // Créer un iframe pour afficher le contenu HTML
-            const iframe = document.createElement('iframe');
-            iframe.style.width = '100%';
-            iframe.style.height = '80vh';
-            iframe.style.border = 'none';
-            iframe.srcdoc = html;
+        function openModal(htmlFile) {
+            const modal = document.getElementById('articleModal');
+            const modalBody = document.getElementById('modalBody');
             
-            modalBody.innerHTML = '';
-            modalBody.appendChild(iframe);
-        })
-        .catch(error => {
-            console.error('Erreur lors du chargement:', error);
+            // Afficher le modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Afficher le chargement
             modalBody.innerHTML = `
-                <div class="error">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <p>Erreur lors du chargement</p>
-                    <p style="font-size: 0.9rem; opacity: 0.7;">
-                        Vérifiez que le fichier "${htmlFile}" existe dans le même dossier
-                    </p>
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    Chargement de l'article...
                 </div>
             `;
+            
+            // Charger le contenu HTML
+            fetch(htmlFile)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    // Créer un iframe pour afficher le contenu HTML
+                    const iframe = document.createElement('iframe');
+                    iframe.style.width = '100%';
+                    iframe.style.height = '80vh';
+                    iframe.style.border = 'none';
+                    iframe.srcdoc = html;
+                    
+                    modalBody.innerHTML = '';
+                    modalBody.appendChild(iframe);
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement:', error);
+                    modalBody.innerHTML = `
+                        <div class="error">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Erreur lors du chargement de l'article</p>
+                            <p style="font-size: 0.9rem; opacity: 0.7;">${error.message}</p>
+                        </div>
+                    `;
+                });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('articleModal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Nettoyer le contenu
+            modalBody.innerHTML = '';
+        }
+
+        // Fermer la modal en cliquant en dehors
+        document.getElementById('articleModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
         });
-  }
+
+        // Fermer la modal avec la touche Echap
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Prévenir la soumission du formulaire sur les liens
+        document.querySelectorAll('.read-more').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+            });
+        });
     </script>
 </body>
 </html>
