@@ -151,7 +151,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.8);
+            background: #e53e3e;
             border: none;
             color: white;
             font-size: 1.8rem;
@@ -164,12 +164,18 @@
             justify-content: center;
             transition: all 0.3s ease;
             z-index: 10000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: none;
+            outline: none;
         }
 
         .close-btn:hover {
-            background: rgba(0, 0, 0, 1);
+            background: #c53030;
             transform: scale(1.1);
+        }
+
+        .close-btn:focus {
+            outline: none;
+            box-shadow: none;
         }
 
         .loading {
@@ -286,12 +292,12 @@
                             <a onclick="openModal('article-marketing.html')" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
-                    <div class="card article-card" onclick="openModal('dev_perso.html')">
+                    <div class="card article-card" onclick="openModal('article-developpement-personnel.html')">
                         <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1526379095098-d400fd0bf935?q=80&w=2032&auto=format&fit=crop');"></div>
                         <div class="card-content">
                             <p class="meta">Développement • 15 Mai 2025</p>
                             <h3>Maîtriser Python en autodidacte : Mon parcours et stratégies</h3>
-                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                            <a onclick="openModal('article-developpement-personnel.html')" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="card article-card" onclick="openModal('digital.html')">
