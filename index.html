@@ -107,7 +107,7 @@
             color: #29b6f6;
         }
 
-        /* Modal Styles - Plein écran */
+        /* Modal Styles - Plein écran avec navigation */
         .modal {
             display: none;
             position: fixed;
@@ -147,37 +147,6 @@
             display: block;
         }
 
-        .close-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #e53e3e;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 10000;
-            box-shadow: none;
-            outline: none;
-        }
-
-        .close-btn:hover {
-            background: #c53030;
-            transform: scale(1.1);
-        }
-
-        .close-btn:focus {
-            outline: none;
-            box-shadow: none;
-        }
-
         .loading {
             display: flex;
             align-items: center;
@@ -209,6 +178,21 @@
             font-size: 3rem;
         }
 
+        .error button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .error button:hover {
+            background: #5a67d8;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -229,30 +213,12 @@
                 width: 280px;
             }
             
-            .close-btn {
-                top: 15px;
-                right: 15px;
-                width: 35px;
-                height: 35px;
-                font-size: 1.1rem;
-            }
-            
             .loading {
                 font-size: 1.2rem;
             }
             
             .loading i {
                 font-size: 2.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .close-btn {
-                top: 10px;
-                right: 10px;
-                width: 32px;
-                height: 32px;
-                font-size: 1rem;
             }
         }
 
@@ -297,7 +263,7 @@
                         <div class="card-content">
                             <p class="meta">Développement • 15 Mai 2025</p>
                             <h3>Maîtriser Python en autodidacte : Mon parcours et stratégies</h3>
-                            <a  onclick="openModal('article-developpement-personnel.html')" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                            <a onclick="openModal('article-developpement-personnel.html')" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="card article-card" onclick="openModal('digital.html')">
@@ -305,7 +271,7 @@
                         <div class="card-content">
                             <p class="meta">Productivité • 5 Juin 2025</p>
                             <h3>5 habitudes qui ont transformé ma productivité</h3>
-                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                            <a onclick="openModal('digital.html')" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="card article-card" onclick="openModal('IA.html')">
@@ -313,7 +279,7 @@
                         <div class="card-content">
                             <p class="meta">Business • 20 Juin 2025</p>
                             <h3>Comment créer une stratégie de contenu qui engage</h3>
-                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                            <a onclick="openModal('IA.html')" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -321,12 +287,9 @@
         </div>
     </section>
 
-    <!-- Modal Plein Écran -->
+    <!-- Modal avec Navigation - SANS bouton X -->
     <div id="articleModal" class="modal">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">
-                <i class="fas fa-times"></i>
-            </button>
             <div class="modal-body" id="modalBody">
                 <!-- Le contenu HTML sera chargé ici -->
             </div>
@@ -334,13 +297,32 @@
     </div>
 
     <script>
+        // Variables globales pour la gestion de la navigation
+        let modalHistory = [];
+        let currentModalIndex = -1;
+        let modalOpen = false;
+
         function openModal(htmlFile) {
             const modal = document.getElementById('articleModal');
             const modalBody = document.getElementById('modalBody');
             
-            // Afficher le modal en plein écran
-            modal.classList.add('active');
-            document.body.classList.add('modal-open');
+            // Si c'est la première ouverture du modal
+            if (!modalOpen) {
+                modalOpen = true;
+                modalHistory = [];
+                currentModalIndex = -1;
+                
+                // Ajouter un état à l'historique pour pouvoir revenir
+                history.pushState({ modal: true, page: htmlFile }, '', '');
+                
+                // Afficher le modal
+                modal.classList.add('active');
+                document.body.classList.add('modal-open');
+            }
+            
+            // Ajouter la page à l'historique du modal
+            modalHistory.push(htmlFile);
+            currentModalIndex++;
             
             // Afficher le chargement
             modalBody.innerHTML = `
@@ -359,12 +341,36 @@
                     return response.text();
                 })
                 .then(html => {
+                    // Traiter le HTML pour intercepter les liens
+                    const processedHtml = processModalHtml(html);
+                    
                     // Créer un iframe pour afficher le contenu HTML en plein écran
                     const iframe = document.createElement('iframe');
                     iframe.style.width = '100%';
                     iframe.style.height = '100%';
                     iframe.style.border = 'none';
-                    iframe.srcdoc = html;
+                    iframe.srcdoc = processedHtml;
+                    
+                    // Écouter les messages de l'iframe pour la navigation
+                    iframe.onload = function() {
+                        try {
+                            // Intercepter les clics dans l'iframe
+                            iframe.contentWindow.addEventListener('click', function(e) {
+                                const target = e.target.closest('a');
+                                if (target && target.href && !target.href.startsWith('http')) {
+                                    e.preventDefault();
+                                    // Extraire le nom du fichier de l'URL
+                                    const fileName = target.href.split('/').pop().split('#')[0];
+                                    if (fileName.endsWith('.html')) {
+                                        openModal(fileName);
+                                    }
+                                }
+                            });
+                        } catch (err) {
+                            // Erreur de cross-origin, utiliser une approche alternative
+                            console.log('Cross-origin restriction, using alternative approach');
+                        }
+                    };
                     
                     modalBody.innerHTML = '';
                     modalBody.appendChild(iframe);
@@ -376,9 +382,39 @@
                             <i class="fas fa-exclamation-triangle"></i>
                             <div>Erreur lors du chargement de l'article</div>
                             <div style="font-size: 1rem; opacity: 0.7;">${error.message}</div>
+                            <button onclick="goBackInModal()">Retour</button>
                         </div>
                     `;
                 });
+        }
+
+        function processModalHtml(html) {
+            // Ajouter un script pour intercepter les liens dans l'iframe
+            const script = `
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Intercepter tous les clics sur les liens
+                        document.addEventListener('click', function(e) {
+                            const target = e.target.closest('a');
+                            if (target && target.href && !target.href.startsWith('http') && !target.href.startsWith('mailto:') && !target.href.startsWith('tel:')) {
+                                e.preventDefault();
+                                // Envoyer le message au parent
+                                const fileName = target.href.split('/').pop().split('#')[0];
+                                if (fileName.endsWith('.html')) {
+                                    window.parent.postMessage({type: 'navigate', url: fileName}, '*');
+                                }
+                            }
+                        });
+                    });
+                </script>
+            `;
+            
+            // Insérer le script avant la fermeture du body
+            if (html.includes('</body>')) {
+                return html.replace('</body>', script + '</body>');
+            } else {
+                return html + script;
+            }
         }
 
         function closeModal() {
@@ -388,14 +424,55 @@
             modal.classList.remove('active');
             document.body.classList.remove('modal-open');
             
+            // Réinitialiser les variables
+            modalOpen = false;
+            modalHistory = [];
+            currentModalIndex = -1;
+            
             // Nettoyer le contenu
             modalBody.innerHTML = '';
         }
 
-        // Fermer la modal avec la touche Echap
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
+        function goBackInModal() {
+            if (currentModalIndex > 0) {
+                currentModalIndex--;
+                const previousPage = modalHistory[currentModalIndex];
+                // Retirer la page actuelle de l'historique
+                modalHistory.pop();
+                // Charger la page précédente
+                openModal(previousPage);
+            } else {
+                // Si on est à la première page, fermer le modal
                 closeModal();
+                history.back();
+            }
+        }
+
+        // Écouter les messages de l'iframe pour la navigation
+        window.addEventListener('message', function(e) {
+            if (e.data.type === 'navigate') {
+                openModal(e.data.url);
+            }
+        });
+
+        // Gestion du bouton retour du navigateur/téléphone
+        window.addEventListener('popstate', function(e) {
+            if (modalOpen) {
+                if (e.state && e.state.modal) {
+                    // Si on est dans l'historique du modal, naviguer en arrière dans le modal
+                    goBackInModal();
+                } else {
+                    // Fermer le modal
+                    closeModal();
+                }
+            }
+        });
+
+        // Fermer avec la touche Échap (optionnel)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOpen) {
+                closeModal();
+                history.back();
             }
         });
 
