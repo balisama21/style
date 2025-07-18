@@ -297,178 +297,119 @@
     </div>
 
     <script>
-        // Variables globales pour la gestion de la navigation
-        let modalHistory = [];
-        let currentModalIndex = -1;
-        let modalOpen = false;
+        var modalHistory = [];
+        var currentModalIndex = -1;
+        var modalOpen = false;
 
         function openModal(htmlFile) {
-            const modal = document.getElementById('articleModal');
-            const modalBody = document.getElementById('modalBody');
+            console.log('Ouverture du modal pour: ' + htmlFile);
             
-            // Si c'est la première ouverture du modal
+            var modal = document.getElementById('articleModal');
+            var modalBody = document.getElementById('modalBody');
+            
+            if (!modal || !modalBody) {
+                console.error('Elements du modal non trouves');
+                return;
+            }
+            
             if (!modalOpen) {
                 modalOpen = true;
                 modalHistory = [];
                 currentModalIndex = -1;
-                
-                // Ajouter un état à l'historique pour pouvoir revenir
                 history.pushState({ modal: true, page: htmlFile }, '', '');
-                
-                // Afficher le modal
                 modal.classList.add('active');
                 document.body.classList.add('modal-open');
             }
             
-            // Ajouter la page à l'historique du modal
             modalHistory.push(htmlFile);
             currentModalIndex++;
             
-            // Afficher le chargement
-            modalBody.innerHTML = `
-                <div class="loading">
-                    <i class="fas fa-spinner"></i>
-                    <div>Chargement de l'article...</div>
-                </div>
-            `;
+            modalBody.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><div>Chargement du contenu...</div></div>';
             
-            // Charger le contenu HTML
             fetch(htmlFile)
-                .then(response => {
+                .then(function(response) {
                     if (!response.ok) {
-                        throw new Error(`Erreur ${response.status}: ${response.statusText}`);
+                        throw new Error('Erreur ' + response.status + ': ' + response.statusText);
                     }
                     return response.text();
                 })
-                .then(html => {
-                    // Traiter le HTML pour intercepter les liens
-                    const processedHtml = processModalHtml(html);
-                    
-                    // Créer un iframe pour afficher le contenu HTML en plein écran
-                    const iframe = document.createElement('iframe');
+                .then(function(html) {
+                    var iframe = document.createElement('iframe');
                     iframe.style.width = '100%';
                     iframe.style.height = '100%';
                     iframe.style.border = 'none';
-                    iframe.srcdoc = processedHtml;
-                    
-                    // Écouter les messages de l'iframe pour la navigation
-                    iframe.onload = function() {
-                        try {
-                            // Intercepter les clics dans l'iframe
-                            iframe.contentWindow.addEventListener('click', function(e) {
-                                const target = e.target.closest('a');
-                                if (target && target.href && !target.href.startsWith('http')) {
-                                    e.preventDefault();
-                                    // Extraire le nom du fichier de l'URL
-                                    const fileName = target.href.split('/').pop().split('#')[0];
-                                    if (fileName.endsWith('.html')) {
-                                        openModal(fileName);
-                                    }
-                                }
-                            });
-                        } catch (err) {
-                            // Erreur de cross-origin, utiliser une approche alternative
-                            console.log('Cross-origin restriction, using alternative approach');
-                        }
-                    };
+                    iframe.srcdoc = html;
                     
                     modalBody.innerHTML = '';
                     modalBody.appendChild(iframe);
+                    
+                    // Attendre que l'iframe soit chargé puis intercepter les liens
+                    iframe.onload = function() {
+                        setTimeout(function() {
+                            try {
+                                var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                                var links = iframeDoc.querySelectorAll('a');
+                                
+                                for (var i = 0; i < links.length; i++) {
+                                    var link = links[i];
+                                    var href = link.getAttribute('href');
+                                    
+                                    if (href && href.indexOf('.html') !== -1 && href.indexOf('http') !== 0) {
+                                        link.addEventListener('click', function(e) {
+                                            e.preventDefault();
+                                            var url = this.getAttribute('href');
+                                            openModal(url);
+                                        });
+                                    }
+                                }
+                            } catch (error) {
+                                console.log('Impossible d\'acceder au contenu de l\'iframe (cross-origin)');
+                            }
+                        }, 100);
+                    };
                 })
-                .catch(error => {
-                    console.error('Erreur lors du chargement:', error);
-                    modalBody.innerHTML = `
-                        <div class="error">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <div>Erreur lors du chargement de l'article</div>
-                            <div style="font-size: 1rem; opacity: 0.7;">${error.message}</div>
-                            <button onclick="goBackInModal()">Retour</button>
-                        </div>
-                    `;
+                .catch(function(error) {
+                    console.error('Erreur:', error);
+                    modalBody.innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i><div>Erreur lors du chargement</div><div style="font-size: 1rem; opacity: 0.7;">' + error.message + '</div><button onclick="goBackInModal()">Retour</button></div>';
                 });
         }
 
-        function processModalHtml(html) {
-            // Ajouter un script pour intercepter les liens dans l'iframe
-            const script = `
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // Intercepter tous les clics sur les liens
-                        document.addEventListener('click', function(e) {
-                            const target = e.target.closest('a');
-                            if (target && target.href && !target.href.startsWith('http') && !target.href.startsWith('mailto:') && !target.href.startsWith('tel:')) {
-                                e.preventDefault();
-                                // Envoyer le message au parent
-                                const fileName = target.href.split('/').pop().split('#')[0];
-                                if (fileName.endsWith('.html')) {
-                                    window.parent.postMessage({type: 'navigate', url: fileName}, '*');
-                                }
-                            }
-                        });
-                    });
-                </script>
-            `;
-            
-            // Insérer le script avant la fermeture du body
-            if (html.includes('</body>')) {
-                return html.replace('</body>', script + '</body>');
-            } else {
-                return html + script;
-            }
-        }
-
         function closeModal() {
-            const modal = document.getElementById('articleModal');
-            const modalBody = document.getElementById('modalBody');
+            var modal = document.getElementById('articleModal');
+            var modalBody = document.getElementById('modalBody');
             
             modal.classList.remove('active');
             document.body.classList.remove('modal-open');
             
-            // Réinitialiser les variables
             modalOpen = false;
             modalHistory = [];
             currentModalIndex = -1;
-            
-            // Nettoyer le contenu
             modalBody.innerHTML = '';
         }
 
         function goBackInModal() {
             if (currentModalIndex > 0) {
                 currentModalIndex--;
-                const previousPage = modalHistory[currentModalIndex];
-                // Retirer la page actuelle de l'historique
                 modalHistory.pop();
-                // Charger la page précédente
+                var previousPage = modalHistory[currentModalIndex];
+                modalHistory.pop();
                 openModal(previousPage);
             } else {
-                // Si on est à la première page, fermer le modal
                 closeModal();
                 history.back();
             }
         }
 
-        // Écouter les messages de l'iframe pour la navigation
-        window.addEventListener('message', function(e) {
-            if (e.data.type === 'navigate') {
-                openModal(e.data.url);
-            }
-        });
-
-        // Gestion du bouton retour du navigateur/téléphone
         window.addEventListener('popstate', function(e) {
             if (modalOpen) {
                 if (e.state && e.state.modal) {
-                    // Si on est dans l'historique du modal, naviguer en arrière dans le modal
                     goBackInModal();
                 } else {
-                    // Fermer le modal
                     closeModal();
                 }
             }
         });
 
-        // Fermer avec la touche Échap (optionnel)
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && modalOpen) {
                 closeModal();
@@ -476,11 +417,14 @@
             }
         });
 
-        // Prévenir la soumission du formulaire sur les liens
-        document.querySelectorAll('.read-more').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            var readMoreLinks = document.querySelectorAll('.read-more');
+            for (var i = 0; i < readMoreLinks.length; i++) {
+                readMoreLinks[i].addEventListener('click', function(e) {
+                    e.preventDefault();
+                });
+            }
+            console.log('Systeme de modal charge');
         });
     </script>
 </body>
